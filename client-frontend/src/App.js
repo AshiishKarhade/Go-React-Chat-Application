@@ -14,8 +14,29 @@ class App extends Component {
         }
     }
 
+    //Below we are just adding our new message to our previous chatHistory component (using previous state)
     componentDidMount() {
-        connect()
+        connect((msg) => {
+            console.log("New Message")
+            this.setState(prevState => ({
+                chatHistory : [...prevState.chatHistory, msg]
+            }))
+            console.log(this.state);
+        });
+    }
+
+    render(){
+        return (
+            <div className="App">
+                <Header/>
+
+                {/*sending chatHistory as props to our component*/}
+                <ChatHistory chatHistory={ this.state.chatHistory }/>
+
+                <ChatInput send={ this.send }/>
+
+            </div>
+        )
     }
 }
 
