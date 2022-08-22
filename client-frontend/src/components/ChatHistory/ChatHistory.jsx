@@ -11,7 +11,7 @@ class ChatHistory extends Component {
         return(
             <div className="chatHistory">
                 <h2>History</h2>
-                { messages }
+                { message }
             </div>
         )
     }
