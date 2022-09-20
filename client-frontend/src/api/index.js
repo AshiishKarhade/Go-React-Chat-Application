@@ -1,28 +1,30 @@
-var socket = WebSocket("ws://localhost:9000/ws")
+// api/index.js
+var socket = new WebSocket('ws://localhost:9000/ws');
 
 let connect = (cb) => {
-    console.log("connecting...")
+  console.log("connecting")
 
-    socket.onopen = () => {
-        console.log("Connected Success!")
-    }
+  socket.onopen = () => {
+    console.log("Successfully Connected");
+  }
+  
+  socket.onmessage = (msg) => {
+    console.log("Message from WebSocket: ", msg);
+    cb(msg);
+  }
 
-    socket.onmessage = (msg) => {
-        console.log("Message from web socket:", msg)
-    }
+  socket.onclose = (event) => {
+    console.log("Socket Closed Connection: ", event)
+  }
 
-    socket.onclose = (event) => {
-        console.log("Socket connection closed:", event)
-    }
+  socket.onerror = (error) => {
+    console.log("Socket Error: ", error)
+  }
+};
 
-    socket.onerror = (err) => {
-        console.log("Socket Error:", err)
-    }
-}
+let sendMsg = (msg) => {
+  console.log("sending msg: ", msg);
+  socket.send(msg);
+};
 
-let sendMessage = (msg) => {
-    console.log("Sending Message:", msg)
-    socket.send(msg)
-}
-
-export { connect, sendMessage };
+export { connect, sendMsg };
